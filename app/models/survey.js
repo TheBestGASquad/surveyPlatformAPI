@@ -8,13 +8,11 @@ const surveySchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  title: {
+  prompt: {
     type: String,
     required: true
   },
-  //
-  questions: [] // herein we have a slight problem: I am not sure how to best represent that one survey has many questions
-  //
+  results: []
 }, {
   timestamps: true,
   toJSON: {
@@ -27,7 +25,16 @@ const surveySchema = new mongoose.Schema({
   }
 })
 
-// entirely possible I need to define the logic here. Still need to put more thought into how the logic will work
+surveySchema.virtual('addAnswer').patch(function addAnswer(data) {
+  this.results.push(data)
+  // do I need a return value for a non-get?
+})
+
+surveySchema.virtual('getStats').get(function stats() {
+  // will parse the data we want and return it.
+  // Until we have a better idea of how we want to model
+  return res = `${this.prompt} has been answered ${this.results.length} times`
+})
 
 const Survey = mongoose.model('Survey', surveySchema)
 

@@ -21,8 +21,8 @@ const index = (req, res, next) => {
 const show = (req, res) => {
   res.json({
     survey: req.survey.toJSON({ virtuals: true}),
-  });
-};
+  })
+}
 
 const create = (req, res, next) => {
   let survey = Object.assign(req.body.survey, {
@@ -34,21 +34,21 @@ const create = (req, res, next) => {
         .json({
           survey: survey.toJSON({ virtuals: true, user: req.user }),
         }))
-    .catch(next);
+    .catch(next)
 }
 
 const update = (req, res, next) => {
   delete req.body._owner;  // disallow owner reassignment.
   req.survey.update(req.body.survey)
     .then(() => res.sendStatus(204))
-    .catch(next);
-};
+    .catch(next)
+}
 
 const destroy = (req, res, next) => {
   req.survey.remove()
     .then(() => res.sendStatus(204))
-    .catch(next);
-};
+    .catch(next)
+}
 
 module.exports = controller({
   index,
