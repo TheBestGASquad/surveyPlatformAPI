@@ -25,15 +25,22 @@ const surveySchema = new mongoose.Schema({
   }
 })
 
+// one of these two methods will be the way in which we add data to
+// the results array
+surveySchema.methods.addaAnswer = function (data) {
+  this.result.push(data)
+}
+
+// I do not think this is the correct method. Virtuals do not persist to the database
+// and we need ot persist at the moment.
 surveySchema.virtual('addAnswer').patch(function addAnswer(data) {
   this.results.push(data)
-  // do I need a return value for a non-get?
 })
 
 surveySchema.virtual('getStats').get(function stats() {
   // will parse the data we want and return it.
   // Until we have a better idea of how we want to model
-  return res = `${this.prompt} has been answered ${this.results.length} times`
+  return `${this.prompt} has been answered ${this.results.length} times`
 })
 
 const Survey = mongoose.model('Survey', surveySchema)

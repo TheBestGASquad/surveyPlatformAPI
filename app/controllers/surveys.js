@@ -50,6 +50,20 @@ const destroy = (req, res, next) => {
     .catch(next)
 }
 
+// could potentially get a little screwy. Need to change the array and persist
+// the changed array in the database
+
+const addAnswer = (newAnswer) => {
+
+}
+
+const addAnswer = (req, res, next) => {
+  delete req.body._owner
+  req.survey.update(req.body.survey)
+    .then(() => res.sendStatus(204))
+    .catch(next)
+}
+
 module.exports = controller({
   index,
   show,
