@@ -1,8 +1,8 @@
 API="http://localhost:4741"
 URL_PATH="/surveys"
-ID="591f37936ff2630e372abd64"
+ID="591f38a16ff2630e372abd65"
 TOKEN="cj9jt8u7+UGRFfJGYFCj1yNuahz+hDR8gNzo8IebFIM=--hd/zk96AlHn/dUBYL1Sj921qJuB1sIaTpUFXPeIaP/c="
-TEXT="UPDATED"
+TEXT="Another Update"
 
 curl "${API}${URL_PATH}/${ID}" \
   --include \
@@ -12,6 +12,7 @@ curl "${API}${URL_PATH}/${ID}" \
   --data '{
     "survey": {
       "title": "'"${TEXT}"'"
+      },
     }
   }'
 

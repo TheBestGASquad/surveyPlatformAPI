@@ -38,28 +38,27 @@ const create = (req, res, next) => {
 }
 
 const update = (req, res, next) => {
+  // This works effectively for renaming our survey
   delete req.body._owner;  // disallow owner reassignment.
   req.survey.update(req.body.survey)
     .then(() => res.sendStatus(204))
     .catch(next)
 }
 
+// const addAnswer = (req, res, next) => {
+//   // this method is meant to add a the response sent by the user
+//   delete req.body._owner // this can probably say
+//   // so this code works to alter the title. I need to make it work in such a way
+//   // that it pushes a new answer to the results array
+//   req.survey.update(req.body.survey)
+//   // In most cases, it seems that req.body.survey is a string.
+//   // I need to find a way to make it target the results array
+//     .then(() => res.sendStatus(204))
+//     .catch(next)
+// }
+
 const destroy = (req, res, next) => {
   req.survey.remove()
-    .then(() => res.sendStatus(204))
-    .catch(next)
-}
-
-// could potentially get a little screwy. Need to change the array and persist
-// the changed array in the database
-
-const addAnswer = (newAnswer) => {
-
-}
-
-const addAnswer = (req, res, next) => {
-  delete req.body._owner
-  req.survey.update(req.body.survey)
     .then(() => res.sendStatus(204))
     .catch(next)
 }

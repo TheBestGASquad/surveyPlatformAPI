@@ -31,17 +31,17 @@ surveySchema.methods.addaAnswer = function (data) {
   this.result.push(data)
 }
 
-// I do not think this is the correct method. Virtuals do not persist to the database
-// and we need ot persist at the moment.
-surveySchema.virtual('addAnswer').patch(function addAnswer(data) {
-  this.results.push(data)
-})
-
-surveySchema.virtual('getStats').get(function stats() {
-  // will parse the data we want and return it.
-  // Until we have a better idea of how we want to model
-  return `${this.prompt} has been answered ${this.results.length} times`
-})
+// // I do not think this is the correct method. Virtuals do not persist to the database
+// // and we need ot persist at the moment.
+// surveySchema.virtual('addAnswer').patch(function addAnswer(data) {
+//   this.results.push(data)
+// })
+//
+// surveySchema.virtual('getStats').get(function stats() {
+//   // will parse the data we want and return it.
+//   // Until we have a better idea of how we want to model
+//   return `${this.prompt} has been answered ${this.results.length} times`
+// })
 
 const Survey = mongoose.model('Survey', surveySchema)
 
