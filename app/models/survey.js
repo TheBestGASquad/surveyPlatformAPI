@@ -8,11 +8,10 @@ const surveySchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  prompt: {
+  title: {
     type: String,
     required: true
   },
-  results: []
 }, {
   timestamps: true,
   toJSON: {
