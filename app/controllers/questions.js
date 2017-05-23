@@ -43,24 +43,30 @@ const create = (req, res, next) => {
     .catch(next)
 }
 
-// basically using standard issue long form update here. Not sure if it will work or If I will need something more elaborate. Also need to plan for the strong probability that it is simply not possible to touch the array without some form of authentication.
 const update = (req, res, next) => {
-  Question.findById(req.params.id, function(err, question) {
-    if (err) {
-      res.status(422).send(err)
-    } else {
-      question.results.push(req.body.question.results)
-    }
-    console.log('question outside question.save: ' + question)
-    question.save(function (err, updatedQuestion) {
-      console.log('question in .save: ' + question)
-      console.log('res.question' + res.question)
-      if (err) {
-        res.status(500).send(err)
-      }
-      res.send(updatedQuestion)
-      })
+  Question.findByIdAndUpdate(req.params.id, { $push: { results: req.body.question.results }}, function (err, question) {
+    if (err) return handleError(err)
+    res.send(question)
   })
+
+  // Question.findById(req.params.id, function(err, question) {
+  //   if (err) {
+  //     console.log('hits error')
+  //     res.status(422).send(err)
+  //   } else {
+  //     console.log('hits handling')
+  //     question.results.push(req.body.question.results)
+  //   }
+  //   console.log('question outside question.save: ' + question)
+  //   question.save(function (err, updatedQuestion) {
+  //     console.log('updatedQuestion: ' + updatedQuestion)
+  //     // console.log('res.question' + res.question)
+  //     if (err) {
+  //       res.status(500).send(err)
+  //     }
+  //     res.send(updatedQuestion)
+  //     })
+  // })
 }
 
 // allows for deletion of single question
