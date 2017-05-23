@@ -2,7 +2,9 @@
 
 const mongoose = require('mongoose')
 
-const answerSchema = new mongoose.Schema({ response: Boolean })
+const answerSchema = new mongoose.Schema({
+  response: Boolean
+})
 
 const questionSchema = new mongoose.Schema({
   prompt: {
@@ -13,10 +15,10 @@ const questionSchema = new mongoose.Schema({
    type: mongoose.Schema.Types.ObjectId,
    ref: 'Survey',
    required: true,
- }
+ },
  results: [answerSchema]
 })
 
-const Question = mongoose.model('Question', surveySchema)
+const Question = mongoose.model('Question', questionSchema)
 
 module.exports = Question
