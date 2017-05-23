@@ -17,7 +17,7 @@ const index = (req, res, next) => {
       question: question.map((e) =>
         e.toJSON({ virtuals: true})), // no
     }))
-    .catch(next);
+    .catch(next)
 }
 
 const show = (req, res) => {
@@ -33,7 +33,7 @@ const create = (req, res, next) => {
     _survey: req.body.question._survey
     // this pretty much mandates that question be created in concert with
     // survey
-  });
+  })
   Question.create(question)
     .then(question =>
       res.status(201)
@@ -47,15 +47,17 @@ const create = (req, res, next) => {
 const update = (req, res, next) => {
   Question.findById(req.params.id, function(err, question) {
     if (err) {
-      res.status(422).send(err);
+      res.status(422).send(err)
     } else {
-      // I am actually unsure of exactly what will be pushed to the results array. Using req.params.data as a standin until I hit this problem head on.
-          question.results = question.results.push(req.params.data)
+      question.results.push(req.body.question.results)
     }
-    question.save(function (err, updatedQuestion) {
-        if (err) return handleError(err);
-        res.send(updatedQuestion);
-      });
+
+    question.save(function (err, question) {
+      if (err) {
+        res.status(500).send(err)
+      }
+        res.send(question)
+      })
   })
 }
 
