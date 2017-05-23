@@ -65,3 +65,16 @@ const destroy = (req, res, next) => {
     .then(() => res.sendStatus(204))
     .catch(next)
 }
+
+module.exports = controller({
+  index,
+  show,
+  create,
+  update,
+  destroy,
+}, { before: [
+  { method: setUser, only: ['index', 'show'] },
+  { method: authenticate, except: ['index', 'show'] },
+  { method: setModel(Question), only: ['show'] },
+  { method: setModel(Question, { forUser: true }), only: ['update', 'destroy'] },
+], })
