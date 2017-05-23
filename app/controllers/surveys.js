@@ -18,6 +18,13 @@ const index = (req, res, next) => {
     .catch(next);
 }
 
+const userSurveys = (req, res, next) => {
+  let searchUserSurveys = { _owner: req.user._id };
+  Survey.find(searchUserSurveys)
+  .then(survey => survey ? res.json({ survey }) : next())
+  .catch(err => next(err))
+};
+
 const show = (req, res) => {
   res.json({
     survey: req.survey.toJSON({ virtuals: true}),
@@ -69,6 +76,7 @@ module.exports = controller({
   create,
   update,
   destroy,
+  userSurveys,
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
