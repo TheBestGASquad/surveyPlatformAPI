@@ -8,9 +8,17 @@ const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
-// index and show is going to be largely the same as they are in
-// survey. Show will be indiscriminate while index will be linked
-// to the ID of its owner
+// const index = (req, res, next) => {
+//   let searchUserQuestions = { _survey: req.body.question._survey }
+//   Question.find(searchUserQuestions)
+//     .then(question => res.json({
+//       question: question.map((e) =>
+//         e.toJSON({ virtuals: true})), // no
+//     }))
+//     .catch(err => next(err))
+// }
+
+// indiscriminate index. We don't want this because we do not want the user to be able to return questions without first returning a survey
 const index = (req, res, next) => {
   Question.find()
     .then(question => res.json({
