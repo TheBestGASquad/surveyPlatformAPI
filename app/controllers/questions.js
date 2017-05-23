@@ -51,12 +51,14 @@ const update = (req, res, next) => {
     } else {
       question.results.push(req.body.question.results)
     }
-
-    question.save(function (err, question) {
+    console.log('question outside question.save: ' + question)
+    question.save(function (err, updatedQuestion) {
+      console.log('question in .save: ' + question)
+      console.log('res.question' + res.question)
       if (err) {
         res.status(500).send(err)
       }
-        res.send(question)
+      res.send(updatedQuestion)
       })
   })
 }
