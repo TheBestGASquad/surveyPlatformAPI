@@ -54,6 +54,8 @@ const update = (req, res, next) => {
 }
 
 const destroy = (req, res, next) => {
+  // need to foreach, then remove every question associated with the survey to be deleted.
+  // once all questions linked to survey are gone, removes the survey
   req.survey.remove()
     .then(() => res.sendStatus(204))
     .catch(next)
