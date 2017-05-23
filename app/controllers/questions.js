@@ -43,8 +43,20 @@ const create = (req, res, next) => {
     .catch(next)
 }
 
+// basically using standard issue long form update here. Not sure if it will work or If I will need something more elaborate. Also need to plan for the strong probability that it is simply not possible to touch the array without some form of authentication.
 const update = (req, res, next) => {
-  // going to update this later
+  Question.findById(req.params.id, function(err, question) {
+    if (err) {
+      res.status(422).send(err);
+    } else {
+      // I am actually unsure of exactly what will be pushed to the results array. Using req.params.data as a standin until I hit this problem head on.
+          question.results = question.results.push(req.params.data)
+    }
+    question.save(function (err, updatedQuestion) {
+        if (err) return handleError(err);
+        res.send(updatedQuestion);
+      });
+  })
 }
 
 // allows for deletion of single question
