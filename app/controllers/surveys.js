@@ -18,6 +18,13 @@ const index = (req, res, next) => {
     .catch(next);
 }
 
+const userSurveys = (req, res, next) => {
+  let searchUserSurveys = { _owner: req.user._id };
+  Survey.find(searchUserSurveys)
+  .then(survey => survey ? res.json({ survey }) : next())
+  .catch(err => next(err))
+};
+
 const show = (req, res) => {
   res.json({
     survey: req.survey.toJSON({ virtuals: true}),
@@ -27,7 +34,7 @@ const show = (req, res) => {
 const create = (req, res, next) => {
   let survey = Object.assign(req.body.survey, {
     _owner: req.user._id,
-  });
+  })
   Survey.create(survey)
     .then(survey =>
       res.status(201)
@@ -37,6 +44,7 @@ const create = (req, res, next) => {
     .catch(next)
 }
 
+// allows the current user update the title of a survey linked to them
 const update = (req, res, next) => {
   // This works effectively for renaming our survey
   delete req.body._owner;  // disallow owner reassignment.
@@ -44,18 +52,6 @@ const update = (req, res, next) => {
     .then(() => res.sendStatus(204))
     .catch(next)
 }
-
-// const addAnswer = (req, res, next) => {
-//   // this method is meant to add a the response sent by the user
-//   delete req.body._owner // this can probably say
-//   // so this code works to alter the title. I need to make it work in such a way
-//   // that it pushes a new answer to the results array
-//   req.survey.update(req.body.survey)
-//   // In most cases, it seems that req.body.survey is a string.
-//   // I need to find a way to make it target the results array
-//     .then(() => res.sendStatus(204))
-//     .catch(next)
-// }
 
 const destroy = (req, res, next) => {
   req.survey.remove()
@@ -69,6 +65,7 @@ module.exports = controller({
   create,
   update,
   destroy,
+  userSurveys,
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
