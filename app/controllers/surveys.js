@@ -19,19 +19,11 @@ const index = (req, res, next) => {
 }
 
 const userSurveys = (req, res, next) => {
-<<<<<<< HEAD
-  let searchUserSurveys = { _owner: req.user._id };
-  Survey.find(searchUserSurveys)
-  .then(survey => survey ? res.json({ survey }) : next())
-  .catch(err => next(err))
-};
-=======
   let searchUserSurveys = { _owner: req.user._id }
   Survey.find(searchUserSurveys)
   .then(survey => survey ? res.json({ survey }) : next())
   .catch(err => next(err))
 }
->>>>>>> feature
 
 const show = (req, res) => {
   res.json({

@@ -12,21 +12,13 @@ const setModel = require('./concerns/set-mongoose-model')
 // survey. Show will be indiscriminate while index will be linked
 // to the ID of its owner
 const index = (req, res, next) => {
-<<<<<<< HEAD
-  Question.find()
-=======
   let searchUserQuestions = { _survey: req.query.question._id }
   Question.find(searchUserQuestions)
->>>>>>> feature
     .then(question => res.json({
       question: question.map((e) =>
         e.toJSON({ virtuals: true})), // no
     }))
-<<<<<<< HEAD
-    .catch(next);
-=======
     .catch(err => next(err))
->>>>>>> feature
 }
 
 const show = (req, res) => {
