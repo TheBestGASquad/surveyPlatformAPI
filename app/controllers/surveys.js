@@ -19,11 +19,11 @@ const index = (req, res, next) => {
 }
 
 const userSurveys = (req, res, next) => {
-  let searchUserSurveys = { _owner: req.user._id };
+  let searchUserSurveys = { _owner: req.user._id }
   Survey.find(searchUserSurveys)
   .then(survey => survey ? res.json({ survey }) : next())
   .catch(err => next(err))
-};
+}
 
 const show = (req, res) => {
   res.json({

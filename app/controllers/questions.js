@@ -12,6 +12,8 @@ const setModel = require('./concerns/set-mongoose-model')
 const index = (req, res, next) => {
   let searchSurveyQuestions = { _survey: req.query.question._survey }
   Question.find(searchSurveyQuestions)
+  let searchUserQuestions = { _survey: req.query.question._id }
+  Question.find(searchUserQuestions)
     .then(question => res.json({
       question: question.map((e) =>
         e.toJSON({ virtuals: true})), // no
