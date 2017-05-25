@@ -4,22 +4,14 @@ const controller = require('lib/wiring/controller')
 const models = require('app/models')
 const Question = models.question
 
+const mongoose = require('mongoose')
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
-// const index = (req, res, next) => {
-//   let searchUserQuestions = { _survey: req.body.question._survey }
-//   Question.find(searchUserQuestions)
-//     .then(question => res.json({
-//       question: question.map((e) =>
-//         e.toJSON({ virtuals: true})), // no
-//     }))
-//     .catch(err => next(err))
-// }
-
-// indiscriminate index. We don't want this because we do not want the user to be able to return questions without first returning a survey
 const index = (req, res, next) => {
+  let searchSurveyQuestions = { _survey: req.query.question._survey }
+  Question.find(searchSurveyQuestions)
   let searchUserQuestions = { _survey: req.query.question._id }
   Question.find(searchUserQuestions)
     .then(question => res.json({
@@ -27,7 +19,6 @@ const index = (req, res, next) => {
         e.toJSON({ virtuals: true})), // no
     }))
     .catch(err => next(err))
-
 }
 
 const show = (req, res) => {
@@ -41,8 +32,6 @@ const show = (req, res) => {
 const create = (req, res, next) => {
   let question = Object.assign(req.body.question, {
     _survey: req.body.question._survey
-    // this pretty much mandates that question be created in concert with
-    // survey
   })
   Question.create(question)
     .then(question =>
@@ -58,25 +47,6 @@ const update = (req, res, next) => {
     if (err) return handleError(err)
     res.send(question)
   })
-
-  // Question.findById(req.params.id, function(err, question) {
-  //   if (err) {
-  //     console.log('hits error')
-  //     res.status(422).send(err)
-  //   } else {
-  //     console.log('hits handling')
-  //     question.results.push(req.body.question.results)
-  //   }
-  //   console.log('question outside question.save: ' + question)
-  //   question.save(function (err, updatedQuestion) {
-  //     console.log('updatedQuestion: ' + updatedQuestion)
-  //     // console.log('res.question' + res.question)
-  //     if (err) {
-  //       res.status(500).send(err)
-  //     }
-  //     res.send(updatedQuestion)
-  //     })
-  // })
 }
 
 // allows for deletion of single question
