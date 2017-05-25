@@ -8,9 +8,17 @@ const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
 const setModel = require('./concerns/set-mongoose-model')
 
-// index and show is going to be largely the same as they are in
-// survey. Show will be indiscriminate while index will be linked
-// to the ID of its owner
+// const index = (req, res, next) => {
+//   let searchUserQuestions = { _survey: req.body.question._survey }
+//   Question.find(searchUserQuestions)
+//     .then(question => res.json({
+//       question: question.map((e) =>
+//         e.toJSON({ virtuals: true})), // no
+//     }))
+//     .catch(err => next(err))
+// }
+
+// indiscriminate index. We don't want this because we do not want the user to be able to return questions without first returning a survey
 const index = (req, res, next) => {
   let searchUserQuestions = { _survey: req.query.question._id }
   Question.find(searchUserQuestions)
@@ -19,6 +27,7 @@ const index = (req, res, next) => {
         e.toJSON({ virtuals: true})), // no
     }))
     .catch(err => next(err))
+
 }
 
 const show = (req, res) => {
@@ -34,7 +43,7 @@ const create = (req, res, next) => {
     _survey: req.body.question._survey
     // this pretty much mandates that question be created in concert with
     // survey
-  });
+  })
   Question.create(question)
     .then(question =>
       res.status(201)
@@ -44,20 +53,30 @@ const create = (req, res, next) => {
     .catch(next)
 }
 
-// basically using standard issue long form update here. Not sure if it will work or If I will need something more elaborate. Also need to plan for the strong probability that it is simply not possible to touch the array without some form of authentication.
 const update = (req, res, next) => {
-  Question.findById(req.params.id, function(err, question) {
-    if (err) {
-      res.status(422).send(err);
-    } else {
-      // I am actually unsure of exactly what will be pushed to the results array. Using req.params.data as a standin until I hit this problem head on.
-          question.results = question.results.push(req.params.data)
-    }
-    question.save(function (err, updatedQuestion) {
-        if (err) return handleError(err);
-        res.send(updatedQuestion);
-      });
+  Question.findByIdAndUpdate(req.params.id, { $push: { results: req.body.question.results }}, function (err, question) {
+    if (err) return handleError(err)
+    res.send(question)
   })
+
+  // Question.findById(req.params.id, function(err, question) {
+  //   if (err) {
+  //     console.log('hits error')
+  //     res.status(422).send(err)
+  //   } else {
+  //     console.log('hits handling')
+  //     question.results.push(req.body.question.results)
+  //   }
+  //   console.log('question outside question.save: ' + question)
+  //   question.save(function (err, updatedQuestion) {
+  //     console.log('updatedQuestion: ' + updatedQuestion)
+  //     // console.log('res.question' + res.question)
+  //     if (err) {
+  //       res.status(500).send(err)
+  //     }
+  //     res.send(updatedQuestion)
+  //     })
+  // })
 }
 
 // allows for deletion of single question
