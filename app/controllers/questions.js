@@ -20,12 +20,14 @@ const setModel = require('./concerns/set-mongoose-model')
 
 // indiscriminate index. We don't want this because we do not want the user to be able to return questions without first returning a survey
 const index = (req, res, next) => {
-  Question.find()
+  let searchUserQuestions = { _survey: req.query.question._id }
+  Question.find(searchUserQuestions)
     .then(question => res.json({
       question: question.map((e) =>
         e.toJSON({ virtuals: true})), // no
     }))
-    .catch(next)
+    .catch(err => next(err))
+
 }
 
 const show = (req, res) => {
