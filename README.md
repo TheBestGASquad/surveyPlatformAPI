@@ -1,9 +1,7 @@
 Survey Lemur
 
 FRONT END DEPLOYED - https://thebestgasquad.github.io/FrontEnd/
-
 FRONT END REPO - https://github.com/TheBestGASquad/FrontEnd
-
 BACKEND REPO - https://github.com/TheBestGASquad/surveyPlatformAPI
 BACKEND DEPLOYED - https://radiant-plains-78167.herokuapp.com/
 
