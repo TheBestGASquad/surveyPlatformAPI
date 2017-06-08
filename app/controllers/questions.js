@@ -49,6 +49,12 @@ const update = (req, res, next) => {
   })
 }
 
+const editQuestion = (req, res, next) => {
+  req.question.update(req.body.question)
+    .then(() => res.sendStatus(204))
+    .catch(next)
+}
+
 // allows for deletion of single question
 const destroy = (req, res, next) => {
   req.question.remove()

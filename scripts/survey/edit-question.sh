@@ -1,19 +1,18 @@
-#!/bin/bash
 API="http://localhost:4741"
-URL_PATH="/surveys"
-
-ID="591f37936ff2630e372abd64"
+URL_PATH="/edit-question"
+ID="592617ae853d3d331f1f567e"
 TOKEN="s3gVr1f9bxK690S+1arKeqEfqUVmZrhLeNtzkrdHX5E=--hnjkCGX6GSNXY5qCXlJsaf7DTE+R8h8Xu1flxFa1hZI="
-TEXT="NEW TEST"
+TEXT="Another Update"
 
-curl "${API}${URL_PATH}" \
+curl "${API}${URL_PATH}/${ID}" \
   --include \
-  --request POST \
+  --request PATCH \
   --header "Content-Type: application/json" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
-    "survey": {
-      "title": "'"${TEXT}"'"
+    "question": {
+      "prompt": "'"${TEXT}"'"
+      },
     }
   }'
 
