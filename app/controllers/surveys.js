@@ -1,4 +1,3 @@
-// You ahve critical information stored in the mongoose study
 'use strict'
 
 const controller = require('lib/wiring/controller')
