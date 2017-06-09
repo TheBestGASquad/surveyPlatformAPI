@@ -47,6 +47,7 @@ const create = (req, res, next) => {
 }
 
 const update = (req, res, next) => {
+  console.log('this is update survey', results)
   Question.findByIdAndUpdate(req.params.id, { $push: { results: req.body.question.results }}, function (err, question) {
     if (err) return handleError(err)
     res.send(question)
@@ -55,8 +56,13 @@ const update = (req, res, next) => {
 
 const editQuestion = (req, res, next) => {
   console.log('this is edit question function')
-  let question = Object.assign(req.body.question)
-  console.log('this is req.body.question', req.body.question)
+  Question.findByIdAndUpdate(req.params.id, { $push: {prompt: req.body.question.prompt}}, function (err, prompt) {
+    if (err) return (next)
+    res.send(prompt)
+  })
+  // let question = Object.assign(req.body.question)
+  console.log('this is Question', Question)
+  console.log('this is req.body.question.prompt', req.body.question.prompt)
   // 1
   // Question.update(question)
   //   .then(question =>
@@ -67,10 +73,10 @@ const editQuestion = (req, res, next) => {
   //   .catch(next)
 
   // 2
-  Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.body.question.prompt }}, function (err, question) {
-    if (err) return handleError(err)
-    res.send(question)
-  })
+  // Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.body.question.prompt }}, function (err, question) {
+  //   if (err) return handleError(err)
+  //   res.send(question)
+  // })
 
   // 3
   // Question.find(req.params.id)

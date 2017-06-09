@@ -12,7 +12,6 @@ curl "${API}${URL_PATH}/${ID}" \
   --data '{
     "survey": {
       "title": "'"${TEXT}"'"
-      },
     }
   }'
 
