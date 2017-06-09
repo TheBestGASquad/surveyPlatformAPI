@@ -22,6 +22,7 @@ const index = (req, res, next) => {
 }
 
 const show = (req, res) => {
+  console.log('show questions function')
   res.json({
     question: req.question.toJSON({ virtuals: true}),
   })
@@ -32,6 +33,7 @@ const show = (req, res) => {
 const create = (req, res, next) => {
   let question = Object.assign(req.body.question, {
     _survey: req.body.question._survey
+    // console.log('create question function', req.body.question)
   })
   Question.create(question)
     .then(question =>
@@ -70,8 +72,8 @@ module.exports = controller({
   update,
   destroy,
 }, { before: [
-  { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show', 'update'] },
+  // { method: setUser, only: ['index', 'show'] },
+  { method: authenticate, except: ['index', 'show'] },
   { method: setModel(Question), only: ['show'] },
   { method: setModel(Question, { forUser: true }), only: ['update', 'destroy'] },
 ], })
