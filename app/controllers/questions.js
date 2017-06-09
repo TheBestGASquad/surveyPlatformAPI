@@ -54,9 +54,37 @@ const update = (req, res, next) => {
 }
 
 const editQuestion = (req, res, next) => {
-  req.question.update(req.body.question)
-    .then(() => res.sendStatus(204))
-    .catch(next)
+  console.log('this is edit question function')
+  let question = Object.assign(req.body.question)
+  console.log('this is req.body.question', req.body.question)
+  // 1
+  // Question.update(question)
+  //   .then(question =>
+  //     res.status(201)
+  //       .json({
+  //         question: question.toJSON({ virtuals: true, user: req.user }),
+  //       }))
+  //   .catch(next)
+
+  // 2
+  Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.body.question.prompt }}, function (err, question) {
+    if (err) return handleError(err)
+    res.send(question)
+  })
+
+  // 3
+  // Question.find(req.params.id)
+  //   .then(question => question.update(req.body.question)
+  //
+  // // delete req.body._owner;  // disallow owner reassignment.
+  // req.question.update(req.body.question)
+  // .then(() => res.sendStatus(204))
+  // .catch(next);
+
+  // 4
+  // req.question.update(req.body.question)
+    // .then(() => res.sendStatus(204))
+    // .catch(next)
 }
 
 // allows for deletion of single question
@@ -77,9 +105,10 @@ module.exports = controller({
   create,
   update,
   destroy,
+  editQuestion
 }, { before: [
   // { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show'] },
+  { method: authenticate, except: ['index', 'show', 'editQuestion'] },
   // { method: setModel(Question), only: ['show'] },
   { method: setModel(Question), only: ['show', 'update', 'destroy'] },
 ], })

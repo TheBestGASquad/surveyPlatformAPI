@@ -1,7 +1,7 @@
 API="http://localhost:4741"
 URL_PATH="/edit-question"
-ID="592617ae853d3d331f1f567e"
-TOKEN="s3gVr1f9bxK690S+1arKeqEfqUVmZrhLeNtzkrdHX5E=--hnjkCGX6GSNXY5qCXlJsaf7DTE+R8h8Xu1flxFa1hZI="
+ID="593b1c8171578924fdbec53c"
+TOKEN="94hiJOSv1K5xd2jOtwhawjYd+yVGBRc/aAEnfYL3Xt8=--bWqD/+qWm4SS1Arz5rNncdoCWm8kEpKLQv+M2KHU46c="
 TEXT="Another Update"
 
 curl "${API}${URL_PATH}/${ID}" \
@@ -11,8 +11,7 @@ curl "${API}${URL_PATH}/${ID}" \
   --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "question": {
-      "prompt": "'"${TEXT}"'"
-      },
+       "prompt": "'"${TEXT}"'"
     }
   }'
 
