@@ -11,6 +11,7 @@ const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   let searchSurveyQuestions = { _survey: req.query.question._survey }
+  console.log('this is req.query', req.query)
   Question.find(searchSurveyQuestions)
   let searchUserQuestions = { _survey: req.query.question._id }
   Question.find(searchUserQuestions)
@@ -31,6 +32,7 @@ const show = (req, res) => {
 // create is going to need to be called in congress with create survey so
 // that survey can pass its ID to the questions
 const create = (req, res, next) => {
+  console.log('this is create question', req.body)
   let question = Object.assign(req.body.question, {
     _survey: req.body.question._survey
     // console.log('create question function', req.body.question)
@@ -60,7 +62,11 @@ const editQuestion = (req, res, next) => {
 // allows for deletion of single question
 const destroy = (req, res, next) => {
   console.log('delete function')
-  req.query.question._id.remove()
+  console.log('this is req', req)
+  console.log('this is req.query', req.query)
+  console.log('this is req.question', req.question)
+  console.log('this is req.body', req.body)
+  req.question.remove()
     .then(() => res.sendStatus(204))
     .catch(next)
 }
@@ -74,6 +80,6 @@ module.exports = controller({
 }, { before: [
   // { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Question), only: ['show'] },
-  { method: setModel(Question, { forUser: true }), only: ['update', 'destroy'] },
+  // { method: setModel(Question), only: ['show'] },
+  { method: setModel(Question), only: ['show', 'update', 'destroy'] },
 ], })

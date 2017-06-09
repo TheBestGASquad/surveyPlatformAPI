@@ -11,6 +11,7 @@ const setMongooseModel = (model, options) =>
 
     model.findOne(search, (error, document) => {
       error = error || !document && new HttpError(404);
+      console.log('set mongoose model', error)
       if (error) {
         return next(error);
       }

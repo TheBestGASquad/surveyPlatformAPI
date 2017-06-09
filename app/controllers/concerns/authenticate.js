@@ -16,6 +16,7 @@ const accessDenied = (res) => {
 };
 
 const authenticate = (req, res, next) => {
+  console.log('authenticate function')
   const tokenRegex = /^Token token=/;
   const separatorRegex = /\s*(?::|;|\t+)\s*/;
   let auth = req.headers.authorization;
