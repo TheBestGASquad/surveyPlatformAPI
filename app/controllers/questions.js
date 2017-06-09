@@ -57,7 +57,8 @@ const editQuestion = (req, res, next) => {
 
 // allows for deletion of single question
 const destroy = (req, res, next) => {
-  req.question.remove()
+  console.log('delete function')
+  req.query.question._id.remove()
     .then(() => res.sendStatus(204))
     .catch(next)
 }
