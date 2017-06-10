@@ -1,7 +1,7 @@
 API="http://localhost:4741"
 URL_PATH="/edit-question"
 ID="593c7475b18406632efd07cc"
-TOKEN="Y2ylk7K9kWo+5BrdJvj06aBAuLmoCRzzm2/yvY18x2w=--v82xuhdh00nE2pGIV/AwO5gOmusjK9SWJWJdCuofCxw="
+TOKEN="8peqHL6yXj16sft46NcXpXYu8n59h/vPIs2cEy2ucqE=--XKpplLKfyEB1WO2A8p7f6xb9CK6aBnb2KlikDblD22E="
 TEXT="why do you not work for real"
 
 curl "${API}${URL_PATH}/${ID}" \

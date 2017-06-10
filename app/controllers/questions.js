@@ -58,10 +58,10 @@ const update = (req, res, next) => {
 const editQuestion = (req, res, next) => {
   console.log('this is edit question function')
   console.log('this is req.question', req.question)
-  Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.body.question.prompt}}, function (err, prompt) {
-    // if (err) return handleError(err)
-    res.send(prompt)
-  })
+  // Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.body.question.prompt}}, function (err, prompt) {
+  //   if (err) return handleError(err)
+  //   res.send(prompt)
+  // })
   // req.question.update(req.question.prompt)
   //   .then(() =>
   //   res.sendStatus(200))
@@ -82,18 +82,15 @@ const editQuestion = (req, res, next) => {
   // })
 
   // 3
-  // Question.find(req.params.id)
-  //   .then(question => question.update(req.body.question)
-  //
-  // // delete req.body._owner;  // disallow owner reassignment.
-  // req.question.update(req.body.question)
-  // .then(() => res.sendStatus(204))
-  // .catch(next);
+  Question.find(req.params.id)
+  req.question.update(req.body.question)
+  .then(() => res.sendStatus(204))
+  .catch(next)
 
   // 4
   // req.question.update(req.body.question)
-    // .then(() => res.sendStatus(204))
-    // .catch(next)
+  //   .then(() => res.sendStatus(204))
+  //   .catch(next)
 }
 
 // allows for deletion of single question
