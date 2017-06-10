@@ -4,6 +4,7 @@ const controller = require('lib/wiring/controller')
 const models = require('app/models')
 const Question = models.question
 
+
 const mongoose = require('mongoose')
 const authenticate = require('./concerns/authenticate')
 const setUser = require('./concerns/set-current-user')
@@ -45,7 +46,7 @@ const create = (req, res, next) => {
         }))
     .catch(next)
 }
-
+// answer question
 const update = (req, res, next) => {
   console.log('this is update survey', results)
   Question.findByIdAndUpdate(req.params.id, { $push: { results: req.body.question.results }}, function (err, question) {
@@ -56,8 +57,15 @@ const update = (req, res, next) => {
 
 const editQuestion = (req, res, next) => {
   console.log('this is edit question function')
-  console.log('this is req.params.id', req.params.id)
-  console.log('this is req.question.prompt', req.question.prompt)
+  console.log('this is req.question', req.question)
+  Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.body.question.prompt}}, function (err, prompt) {
+    // if (err) return handleError(err)
+    res.send(prompt)
+  })
+  // req.question.update(req.question.prompt)
+  //   .then(() =>
+  //   res.sendStatus(200))
+  //   .catch(next)
   // 1
   // Question.update(question)
   //   .then(question =>
@@ -68,10 +76,10 @@ const editQuestion = (req, res, next) => {
   //   .catch(next)
 
   // 2
-  Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.question.prompt }}, function (err, question) {
-    if (err) return handleError(err)
-    res.send(question)
-  })
+  // Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.question.prompt }}, function (err, question) {
+  //   if (err) return handleError(err)
+  //   res.send(prompt)
+  // })
 
   // 3
   // Question.find(req.params.id)

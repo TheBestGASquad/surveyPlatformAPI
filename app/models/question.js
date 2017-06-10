@@ -5,6 +5,10 @@ const mongoose = require('mongoose')
 const answerSchema = new mongoose.Schema({
   response: Boolean
 })
+//
+// const newPrompt = new mongoose.Schema({
+//   response: String
+// })
 
 const questionSchema = new mongoose.Schema({
   prompt: {
@@ -14,8 +18,13 @@ const questionSchema = new mongoose.Schema({
   _survey: {
    type: mongoose.Schema.Types.ObjectId,
    ref: 'Survey',
-   required: true,
- },
+   required: true
+  },
+  // _title: {
+  //   type: String,
+  //   ref: 'Survey',
+  //   required: true
+  // },
  results: [answerSchema]
 })
 
@@ -44,5 +53,7 @@ questionSchema.virtual('answerData').get(function () {
 // })
 
 const Question = mongoose.model('Question', questionSchema)
+
+
 
 module.exports = Question
