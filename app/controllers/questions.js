@@ -57,26 +57,21 @@ const update = (req, res, next) => {
 const editQuestion = (req, res, next) => {
   console.log('this is edit question function')
   console.log('this is req.params.id', req.params.id)
-  console.log('this is req.body.prompt', req.body.question.prompt)
-  Question.findByIdAndUpdate(req.params.id, { $push: {question: req.body.question.prompt}}, function (err, question) {
-    if (err) return (next)
-    res.send(question)
-  })
-  // let question = Object.assign(req.body.question)
+  console.log('this is req.question.prompt', req.question.prompt)
   // 1
   // Question.update(question)
   //   .then(question =>
   //     res.status(201)
   //       .json({
-  //         question: question.toJSON({ virtuals: true, user: req.user }),
+  //         question: question.toJSON({ virtuals: true, prompt: req.question }),
   //       }))
   //   .catch(next)
 
   // 2
-  // Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.body.question.prompt }}, function (err, question) {
-  //   if (err) return handleError(err)
-  //   res.send(question)
-  // })
+  Question.findByIdAndUpdate(req.params.id, { $push: { prompt: req.question.prompt }}, function (err, question) {
+    if (err) return handleError(err)
+    res.send(question)
+  })
 
   // 3
   // Question.find(req.params.id)
@@ -114,6 +109,6 @@ module.exports = controller({
   editQuestion
 }, { before: [
   // { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show', 'editQuestion'] },
+  { method: authenticate, except: ['index', 'show'] },
   { method: setModel(Question), only: ['show', 'update', 'destroy', 'editQuestion'] },
 ], })

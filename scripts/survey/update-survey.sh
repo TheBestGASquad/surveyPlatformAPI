@@ -1,7 +1,7 @@
 API="http://localhost:4741"
 URL_PATH="/surveys"
-ID="593c0bbed52fef332e88903c"
-TOKEN="cj9jt8u7+UGRFfJGYFCj1yNuahz+hDR8gNzo8IebFIM=--hd/zk96AlHn/dUBYL1Sj921qJuB1sIaTpUFXPeIaP/c="
+ID="593c183d10e9203aa2a37f32"
+TOKEN="NcNMDMzIYXSDAXHcSOHwQr7Rmm0LPKx5Zzq5jgDWCRI=--6IH2m5BLxQY5hxjG+FBjiGso5esKt5eZ4FUT2XfQRkM="
 TEXT="Another Update for survey"
 
 curl "${API}${URL_PATH}/${ID}" \
