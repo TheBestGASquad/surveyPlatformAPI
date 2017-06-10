@@ -56,13 +56,13 @@ const update = (req, res, next) => {
 
 const editQuestion = (req, res, next) => {
   console.log('this is edit question function')
-  Question.findByIdAndUpdate(req.params.id, { $push: {prompt: req.body.question.prompt}}, function (err, prompt) {
+  console.log('this is req.params.id', req.params.id)
+  console.log('this is req.body.prompt', req.body.question.prompt)
+  Question.findByIdAndUpdate(req.params.id, { $push: {question: req.body.question.prompt}}, function (err, question) {
     if (err) return (next)
-    res.send(prompt)
+    res.send(question)
   })
   // let question = Object.assign(req.body.question)
-  console.log('this is Question', Question)
-  console.log('this is req.body.question.prompt', req.body.question.prompt)
   // 1
   // Question.update(question)
   //   .then(question =>
@@ -115,6 +115,5 @@ module.exports = controller({
 }, { before: [
   // { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show', 'editQuestion'] },
-  // { method: setModel(Question), only: ['show'] },
-  { method: setModel(Question), only: ['show', 'update', 'destroy'] },
+  { method: setModel(Question), only: ['show', 'update', 'destroy', 'editQuestion'] },
 ], })
