@@ -83,9 +83,13 @@ const editQuestion = (req, res, next) => {
 
   // 3
   Question.find(req.params.id)
-  req.question.update(req.body.question)
-  .then(() => res.sendStatus(204))
-  .catch(next)
+  req.question.update(req.body.question, { $push: {results: req.body.question}}, function (err, question) {
+    if (err) return handleError(err)
+    res.send(question)
+  })
+  console.log('this is req.body.question', req.body.question)
+  // .then(() => res.sendStatus(204))
+  // .catch(next)
 
   // 4
   // req.question.update(req.body.question)
