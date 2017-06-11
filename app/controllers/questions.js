@@ -59,19 +59,23 @@ const update = (req, res, next) => {
 const addQuestion = (req, res, next) => {
   console.log('add question this is req.survey.body', req.body.survey)
   let searchUserSurveys = { _owner: req.user._id }
-  Survey.findByIdAndUpdate(searchUserSurveys)
-  req.survey.update(req.body.survey)
   let question = Object.assign(req.body.question, {
     _survey: req.body.question._survey
   })
+  Survey.findByIdAndUpdate(searchUserSurveys)
+    req.survey.update(req.body.survey, { $push: { question: req.body.question}}, function (err, question) {
+      if (error) return handleError(err)
+      res.send(question)
+    })
   Question.create(question)
   .then(question =>
     res.status(201)
       .json({
-        question: question.toJSON({ virtuals: true, user: req.user }),
+        question: question.toJSON({ virtuals: true}),
       }))
   .catch(next)
 }
+
 const editQuestion = (req, res, next) => {
   console.log('this is edit question function')
   console.log('this is req.question', req.question)
