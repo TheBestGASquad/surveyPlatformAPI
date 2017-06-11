@@ -3,6 +3,7 @@
 const controller = require('lib/wiring/controller')
 const models = require('app/models')
 const Question = models.question
+const Survey = models.survey
 
 
 const mongoose = require('mongoose')
@@ -55,6 +56,22 @@ const update = (req, res, next) => {
   })
 }
 
+const addQuestion = (req, res, next) => {
+  console.log('add question this is req.survey.body', req.body.survey)
+  let searchUserSurveys = { _owner: req.user._id }
+  Survey.findByIdAndUpdate(searchUserSurveys)
+  req.survey.update(req.body.survey)
+  let question = Object.assign(req.body.question, {
+    _survey: req.body.question._survey
+  })
+  Question.create(question)
+  .then(question =>
+    res.status(201)
+      .json({
+        question: question.toJSON({ virtuals: true, user: req.user }),
+      }))
+  .catch(next)
+}
 const editQuestion = (req, res, next) => {
   console.log('this is edit question function')
   console.log('this is req.question', req.question)
@@ -115,9 +132,10 @@ module.exports = controller({
   create,
   update,
   destroy,
-  editQuestion
+  editQuestion,
+  addQuestion
 }, { before: [
   // { method: setUser, only: ['index', 'show'] },
   { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Question), only: ['show', 'update', 'destroy', 'editQuestion'] },
+  { method: setModel(Question), only: ['show', 'update', 'destroy', 'editQuestion', 'addQuestion'] },
 ], })

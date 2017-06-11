@@ -5,10 +5,6 @@ const mongoose = require('mongoose')
 const answerSchema = new mongoose.Schema({
   response: Boolean
 })
-//
-// const newPrompt = new mongoose.Schema({
-//   response: String
-// })
 
 const questionSchema = new mongoose.Schema({
   prompt: {
