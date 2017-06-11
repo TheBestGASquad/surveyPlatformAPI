@@ -30,6 +30,13 @@ const show = (req, res) => {
   })
 }
 
+const surveysTaken = (req, res, next) => {
+  let searchUserSurveys = { _owner: req.user._id }
+  Survey.find(searchUserSurveys)
+  let searchUserTaken = { _owner: req.user_id.survey_id, }
+  Question.find(searchUserTaken)
+}
+
 const create = (req, res, next) => {
   let survey = Object.assign(req.body.survey, {
     _owner: req.user._id,
