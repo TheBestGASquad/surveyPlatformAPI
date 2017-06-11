@@ -1,7 +1,7 @@
 API="http://localhost:4741"
 URL_PATH="/edit-question"
-ID="593c8ed388d35f6d0ffed371"
-TOKEN="63FpQtGqpcQNdHXgm20U+o6v5RwuX7R9FkowfTJb4Ps=--y2DKjMmhqyosrrj+ubwqzYbMdID/BqWzUhmXLga8wZQ="
+ID="593cc21add958c741b52b980"
+TOKEN="n0Itq4w6FgGTVOvzTjY7gyXEHnbs6D50hcIefN2ErcY=--W7oj+gK2msAYZt1Jh/T2h5dlGK9U/etBRGYPglPzC9I="
 TEXT="why do you not work in browser"
 
 curl "${API}${URL_PATH}/${ID}" \
