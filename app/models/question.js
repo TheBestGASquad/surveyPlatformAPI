@@ -20,11 +20,6 @@ const questionSchema = new mongoose.Schema({
    ref: 'Survey',
    required: true
   },
-  // _title: {
-  //   type: String,
-  //   ref: 'Survey',
-  //   required: true
-  // },
  results: [answerSchema]
 })
 

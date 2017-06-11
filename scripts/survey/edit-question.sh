@@ -1,8 +1,8 @@
 API="http://localhost:4741"
 URL_PATH="/edit-question"
-ID="593cc21add958c741b52b980"
-TOKEN="n0Itq4w6FgGTVOvzTjY7gyXEHnbs6D50hcIefN2ErcY=--W7oj+gK2msAYZt1Jh/T2h5dlGK9U/etBRGYPglPzC9I="
-TEXT="why do you not work in browser"
+ID="593cc8a639649b875556c909"
+TOKEN="SG4/VAhV+63/BkG80nlzX5uBUAfeJycwvgkTBYM8M4w=--5tlpIHZl5FQCqZ8H8pvUJZy5TVVTj4qI5rp31HeOjH4="
+TEXT="why do you 500 error in browser"
 
 curl "${API}${URL_PATH}/${ID}" \
   --include \

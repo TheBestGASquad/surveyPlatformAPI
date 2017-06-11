@@ -83,7 +83,7 @@ const editQuestion = (req, res, next) => {
 
   // 3
   Question.find(req.params.id)
-  req.question.update(req.body.question, { $push: {results: req.body.question}}, function (err, question) {
+  req.question.update(req.body.question, { $push: {prompt: req.body.question}}, function (err, question) {
     if (err) return handleError(err)
     res.send(question)
   })
